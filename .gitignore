@@ -1,0 +1,12 @@
+/.env
+.idea/
+/.vscode/
+.DS_Store
+/logs/
+*.log
+/cache/
+/tmp/
+composer.phar
+
+/tests/*.out
+/tests/*.diff
