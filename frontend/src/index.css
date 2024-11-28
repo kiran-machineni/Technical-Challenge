@@ -1,27 +1,21 @@
-/* src/index.css */
 
-/* Global Styles */
 body {
-  background-color: #f8f9fa; /* Light gray background */
+  background-color: #f8f9fa;
 }
 
-/* Navbar Brand Styling */
 .navbar-brand {
   font-weight: bold;
   font-size: 1.5rem;
 }
 
-/* Table Enhancements */
 .table th, .table td {
   vertical-align: middle;
 }
 
-/* Button Enhancements */
 .btn {
   min-width: 80px;
 }
 
-/* Responsive Modal Adjustments */
 @media (max-width: 576px) {
   .modal-dialog {
     max-width: 90%;
