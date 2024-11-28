@@ -1,6 +1,6 @@
 // src/pages/TaskList.jsx
 
-import React, { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { getTasks, deleteTask } from "../services/api"
 import { Button, Table, Container, Row, Col, Alert } from "react-bootstrap"
 import TaskCreateModal from "../components/TaskCreateModal"

@@ -1,8 +1,7 @@
-// src/components/TaskCreateModal.jsx
-
-import React, { useState } from "react"
-import { Modal, Button, Form } from "react-bootstrap"
-import { createTask } from "../services/api"
+import { useState } from "react";
+import { Modal, Button, Form } from "react-bootstrap";
+import { createTask } from "../services/api";
+import PropTypes from "prop-types";
 
 const TaskCreateModal = ({ show, handleClose, refreshTasks }) => {
   const [form, setForm] = useState({
@@ -10,38 +9,50 @@ const TaskCreateModal = ({ show, handleClose, refreshTasks }) => {
     description: "",
     dueDate: "",
     task_status: "pending",
-  })
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [error, setError] = useState("")
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState("");
 
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value })
-  }
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    setIsSubmitting(true)
-    setError("")
+    e.preventDefault();
+    setIsSubmitting(true);
+    setError("");
+
     try {
-      await createTask(form)
+      await createTask(form); // Call the API to create a task
       setForm({
         title: "",
         description: "",
         dueDate: "",
         task_status: "pending",
-      })
-      handleClose()
-      refreshTasks()
+      });
+      handleClose(); // Close the modal
+      refreshTasks(); // Refresh the task list
     } catch (err) {
-      console.error("Error creating task:", err)
-      setError("Failed to create task. Please try again.")
+      console.error("Error creating task:", err);
+      setError("Failed to create task. Please try again.");
     } finally {
-      setIsSubmitting(false)
+      setIsSubmitting(false);
     }
-  }
+  };
+
+  const handleCancel = () => {
+    setForm({
+      title: "",
+      description: "",
+      dueDate: "",
+      task_status: "pending",
+    }); // Reset the form
+    setError(""); // Clear any errors
+    handleClose(); // Close the modal
+  };
 
   return (
-    <Modal show={show} onHide={handleClose}>
+    <Modal show={show} onHide={handleCancel}>
       <Form onSubmit={handleSubmit}>
         <Modal.Header closeButton>
           <Modal.Title>Create Task</Modal.Title>
@@ -58,7 +69,6 @@ const TaskCreateModal = ({ show, handleClose, refreshTasks }) => {
               required
             />
           </Form.Group>
-
           <Form.Group className="mb-3" controlId="formDescription">
             <Form.Label>Description</Form.Label>
             <Form.Control
@@ -70,7 +80,6 @@ const TaskCreateModal = ({ show, handleClose, refreshTasks }) => {
               required
             />
           </Form.Group>
-
           <Form.Group className="mb-3" controlId="formDueDate">
             <Form.Label>Due Date</Form.Label>
             <Form.Control
@@ -81,7 +90,6 @@ const TaskCreateModal = ({ show, handleClose, refreshTasks }) => {
               required
             />
           </Form.Group>
-
           <Form.Group className="mb-3" controlId="formStatus">
             <Form.Label>Status</Form.Label>
             <Form.Select
@@ -96,7 +104,7 @@ const TaskCreateModal = ({ show, handleClose, refreshTasks }) => {
           </Form.Group>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose} disabled={isSubmitting}>
+          <Button variant="secondary" onClick={handleCancel} disabled={isSubmitting}>
             Cancel
           </Button>
           <Button variant="primary" type="submit" disabled={isSubmitting}>
@@ -105,7 +113,13 @@ const TaskCreateModal = ({ show, handleClose, refreshTasks }) => {
         </Modal.Footer>
       </Form>
     </Modal>
-  )
-}
+  );
+};
 
-export default TaskCreateModal
+TaskCreateModal.propTypes = {
+  show: PropTypes.bool.isRequired,
+  handleClose: PropTypes.func.isRequired,
+  refreshTasks: PropTypes.func.isRequired,
+};
+
+export default TaskCreateModal;

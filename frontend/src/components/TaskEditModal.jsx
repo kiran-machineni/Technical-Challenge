@@ -1,8 +1,9 @@
 // src/components/TaskEditModal.jsx
 
-import React, { useState, useEffect } from "react"
+import { useState, useEffect } from "react"
 import { Modal, Button, Form } from "react-bootstrap"
 import { updateTask } from "../services/api"
+import PropTypes from "prop-types";
 
 const TaskEditModal = ({ show, handleClose, task, refreshTasks }) => {
   const [form, setForm] = useState({
@@ -112,5 +113,18 @@ const TaskEditModal = ({ show, handleClose, task, refreshTasks }) => {
     </Modal>
   )
 }
+
+TaskEditModal.propTypes = {
+  show: PropTypes.bool.isRequired,
+  handleClose: PropTypes.func.isRequired,
+  task: PropTypes.shape({
+    title: PropTypes.string,
+    description: PropTypes.string,
+    dueDate: PropTypes.string,
+    task_status: PropTypes.string,
+    taskId: PropTypes.number,
+  }),
+  refreshTasks: PropTypes.func.isRequired,
+};
 
 export default TaskEditModal
