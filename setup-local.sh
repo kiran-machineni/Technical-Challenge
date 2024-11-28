@@ -28,7 +28,7 @@ export AWS_SECRET_ACCESS_KEY=$(aws configure get aws_secret_access_key)
 export AWS_REGION=$(aws configure get region)
 
 echo "Starting the Task Manager application using Docker Compose..."
-docker-compose up -d
+docker compose up -d
 
 echo "Task Manager backend and frontend services are up and running!"
 echo "Access the backend at http://localhost:8080"
