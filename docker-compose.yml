@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  symfony-backend:
+    image: taskmanager-backend:latest
+    container_name: taskmanager-backend-container
+    build:
+      context: ./backend
+    ports:
+      - "8080:80"
+    environment:
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      AWS_REGION: ${AWS_REGION}
+    networks:
+      - taskmanager-network
+
+  react-frontend:
+    image: taskmanager-frontend:latest
+    container_name: taskmanager-frontend-container
+    build:
+      context: ./frontend
+    ports:
+      - "3000:80"
+    networks:
+      - taskmanager-network
+    depends_on:
+      - symfony-backend
+
+networks:
+  taskmanager-network:
+    driver: bridge
